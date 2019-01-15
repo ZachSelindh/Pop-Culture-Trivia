@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "Sketchy";
+    src: url("../fonts/Sketch\ Match.ttf");
+}
+
+* {
+    font-family: "Sketchy" !important;
+    box-sizing: border-box;
+}
+
+body {
+    background: url("../images/pop-culture.png") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h1 {
+    font-size: 250%;
+}
+
+#trivia-header, #trivia-body, 
+#answer-body, #timer-sec {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 150%;
+    margin: auto;
+}
+
+#trivia-header {
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+#timer-sec {
+    margin-top: 1em;
+    text-align: center;
+    font-size: 175%;
+}
+
+#trivia-body {
+    margin-top: 1em;
+    width: 100%;
+    padding: 1em;
+    height: fit-content;
+    text-align: center;
+}
+
+#answer-body {
+    margin-top: 2em;
+    width: 100%;
+}
+
+li {
+    list-style: none;
+    padding: 0.25em;
+    transition: 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+li:hover {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+@media only screen and (max-width:px) {
+
+}
+    
