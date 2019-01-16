@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+.opaque-element {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 body {
     background: url("../images/pop-culture.png") no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -77,10 +81,13 @@ li:hover {
     padding: 2em;
     height: fit-content;
     background-color: rgba(255, 255, 255, 1);
+    display:none;
 }
 
 #popup-text {
     margin-bottom: 10%;
+    text-align: center;
+    font-size: 120%;
 }
 
 #button-array {
@@ -92,7 +99,13 @@ li:hover {
     width: fit-content;
 }
 
-#confirm-button:hover {
+#continue-button {
+    display: none;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.menu-button-z:hover {
     cursor: pointer;
 }
 
