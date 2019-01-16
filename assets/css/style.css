@@ -23,7 +23,8 @@ h1 {
 }
 
 #trivia-header, #trivia-body, 
-#answer-body, #timer-sec {
+#answer-body, #timer-sec, 
+#popup-card {
     background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid black;
     border-radius: 5px;
@@ -64,6 +65,34 @@ li {
 
 li:hover {
     border: 1px solid black;
+    cursor: pointer;
+}
+
+#popup-card {
+    position: absolute;
+    z-index: 2;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    padding: 2em;
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+#popup-text {
+    margin-bottom: 10%;
+}
+
+#button-array {
+    text-align: center;
+}
+
+#confirm-button {
+    overflow: hidden;
+    width: fit-content;
+}
+
+#confirm-button:hover {
     cursor: pointer;
 }
 
