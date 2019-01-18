@@ -28,11 +28,11 @@ var questionArray = [
 
 ]
 
+console.log("Length = " + questionArray.length)
+
 const timerInitial = 10;
 
 var playerWins = 0;
-
-var playerLosses = 0;
     
 var timeRemaining = timerInitial;
 
@@ -43,6 +43,11 @@ $("#time-left").html(timerInitial);
 $("#popup-text").html("Welcome to my pop-culture themed trivia game! If you don't know what Festivus is, what Mr. Narwhal told Buddy before he left the North Pole, or what guitar Wayne from Wayne's World was obsessed with, you might be in the wrong place. But, if you're ready to test your knowledge of otherwise-useless cultural phenomena, then press confirm to begin!");
 
 $("#popup-card").fadeIn(500);
+
+function randomNum() {
+    x = [Math.floor(Math.random() * (questionArray.length - 0))]
+    return x;
+}
 
 function countDown() {
     if (countingDown == true) {
@@ -60,21 +65,46 @@ function outOfTime() {
         clearInterval(countDown);
         $("#popup-card, #continue-button").fadeIn(400);
         $("#popup-text").html("Out of time! No points for this round. Press continue to move on.");
-        playerLosses++;
     } 
 }
 
 function getQuestion() {
-    /* Get the question */
+    var indexOfQuestion = randomNum();
+    questionCurrent = questionArray[indexOfQuestion];
+    questionArray.splice(indexOfQuestion, 1);
+    console.log(questionCurrent);
+    $("#trivia-question").html(questionCurrent.question);
+    for(i = 1; i <= 4; i++) {
+        $("#answer" + i).html(questionCurrent.answers[i - 1]);
+      }
+}
+
+function getAnswers() {
+    for(i = 1; i <= 4; i++) {
+        $("#answer-list").append('<li id="answer'+ i +'" />');
+    }
+}
+
+function winOrLose() {
+    $("li").click(function() {
+        var submittedAnswer = $(this).text();
+        if (submittedAnswer == questionCurrent.correctAnswer) {
+            countingDown = false;
+            console.log("WIN");
+        }
+    });
 }
 
 function gameElements() {
     setInterval(countDown, 1000);
     getQuestion();
+    getAnswers();
     outOfTime();
+    winOrLose();
 }
 
 $("#confirm-button, #continue-button").click(function(){
+    getQuestion();
     $("#popup-card").fadeOut(200);
     $("#confirm-button, #continue-button").hide();
     countingDown = true;
