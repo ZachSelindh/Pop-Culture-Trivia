@@ -44,14 +44,19 @@ var questionArray = [
         answers: [ "Mr. Belding", "Good morning Miss Bliss", "Zack and Kelly", "Jess: Back in Town"],
         correctAnswer: "Good morning Miss Bliss"
     }, {
-        question: "?" ,
-        answers: [ "Mr. Belding", "Good morning Miss Bliss", "Zack and Kelly", "Jess: Back in Town"],
-        correctAnswer: "Good morning Miss Bliss"
+        question: "In 'Avengers: Infinity War,' who is the first superhero to die?" ,
+        answers: [ "Winter Soldier", "Loki", "Star-Lord", "Black Panther"],
+        correctAnswer: "Loki"
     }
 
 ];
 
 var winReactionText = [
+    "Oh yeah! You nailed that one.",
+    "NICE! Correct answer!",
+    "Dude, great job! That was right!",
+    "Could you BE more correct? No.",
+    "Heck yeah. You're clearly a man/woman of culture.",
 
 ];
 
@@ -60,11 +65,29 @@ var loseReactionText = [
 ];
 
 var winReactionGIF = [
-
+    "assets/gifs/right/bale.gif",
+    "assets/gifs/right/barney.gif",
+    "assets/gifs/right/batman.gif",
+    "assets/gifs/right/kermit.gif",
+    "assets/gifs/right/kirk.gif",
+    "assets/gifs/right/levar.gif",
+    "assets/gifs/right/office.gif",
+    "assets/gifs/right/ranger.gif",
+    "assets/gifs/right/snoop.gif",
+    "assets/gifs/right/stefan.gif"
 ];
 
 var loseReactionGIF = [
-
+    "assets/gifs/wrong/chris.gif",
+    "assets/gifs/wrong/claire.gif",
+    "assets/gifs/wrong/dracula.gif",
+    "assets/gifs/wrong/george.gif",
+    "assets/gifs/wrong/napoleon.gif",
+    "assets/gifs/wrong/samuel.gif",
+    "assets/gifs/wrong/shooter.gif",
+    "assets/gifs/wrong/sloth.gif",
+    "assets/gifs/wrong/urkel.gif",
+    "assets/gifs/wrong/will.gif"
 ];
 
 const timerInitial = 10;
@@ -176,6 +199,9 @@ function gameOver() {
     countingDown = false;
     $("#continue-button").hide();
     $("#popup-card, #reset-button").fadeIn(400);
+
+    /* Make if statements that vary depending on the player's final score! */
+
     $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ".");
     $("#popup-text").append("<br>");
     $("#popup-text").append("Press the Reset button to re-load the page and play again!");
