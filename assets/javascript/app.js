@@ -19,33 +19,53 @@ var questionArray = [
         question: "In his titular sitcom, what is Jerry Seinfeld's father's name?",
         answers: [ "Abraham", "Mortimer", "Herb", "Benjamin"],
         correctAnswer: "Mortimer"
-    },/*  {
-        question: "In his titular sitcom, what is Jerry Seinfeld's father's name?",
-        answers: [ "Abraham", "Mortimer", "Herb", "Benjamin"],
-        correctAnswer: "Mortimer"
-    } */
-
-]
-
-var winReaction = [
-    {
-
     }, {
-
+        question: "In 1986's 'Top Gun,' what was Val Kilmer's character's callsign?",
+        answers: [ "Goose", "Flash", "Iceman", "Viper"],
+        correctAnswer: "Iceman"
+    }, {
+        question: "In 1998's 'The Big Lebowski,' what character was the only one who cared about the rules?",
+        answers: [ "Walter", "Dude", "Donnie", "Marty"],
+        correctAnswer: "Walter"
+    }, {
+        question: "In 'The Matrix' (1999), which crew member of the Nebuchadnezzar betrays the other humans?",
+        answers: [ "Tank", "Mouse", "Cypher", "Switch"],
+        correctAnswer: "Cypher"
+    }, {
+        question: "What was the name of the athletic adversarial alien race in 'Space Jam?",
+        answers: [ "Martians", "Morlocks", "Nerdlucks", "Noidrots"],
+        correctAnswer: "Cypher"
+    }, {
+        question: "What is the air-speed velocity of an unladen swallow?",
+        answers: [ "11 m/s", "21.3 knots", "African or European?", "Windspeed + 10%"],
+        correctAnswer: "African or European?"
+    }, {
+        question: "Popular sitcom 'Saved by the Bell' was a spinoff of what failed television precusor?" ,
+        answers: [ "Mr. Belding", "Good morning Miss Bliss", "Zack and Kelly", "Jess: Back in Town"],
+        correctAnswer: "Good morning Miss Bliss"
+    }, {
+        question: "?" ,
+        answers: [ "Mr. Belding", "Good morning Miss Bliss", "Zack and Kelly", "Jess: Back in Town"],
+        correctAnswer: "Good morning Miss Bliss"
     }
 
-]
+];
 
-var loseReaction = [
-    {
+var winReactionText = [
 
-    }, {
-        
-    }
+];
 
-]
+var loseReactionText = [
 
-console.log("Length = " + questionArray.length)
+];
+
+var winReactionGIF = [
+
+];
+
+var loseReactionGIF = [
+
+];
 
 const timerInitial = 10;
 
@@ -57,15 +77,19 @@ var countingDown = false;
 
 $("#time-left").html(timerInitial);
 
-$("#popup-text").html("Welcome to my pop-culture themed trivia game! If you don't know what Festivus is, what Mr. Narwhal told Buddy before he left the North Pole, or what guitar Wayne from Wayne's World was obsessed with, you might be in the wrong place. But, if you're ready to test your knowledge of otherwise-useless cultural phenomena, then press confirm to begin!");
+$("#popup-text").html("Welcome to my pop-culture themed trivia game! \
+If you don't know what Festivus is, what Mr. Narwhal told Buddy before \
+he left the North Pole, or what guitar Wayne from Wayne's World was obsessed \
+with, you might be in the wrong place. But, if you're ready to test your \
+knowledge of otherwise-useless cultural phenomena, then press confirm to begin!");
 
 $("#popup-card").fadeIn(500);
 
     /* Random number generator to pull a question randomly from the array. */
 function randomNum(x) {
-    x = [Math.floor(Math.random() * (x - 0))]
+    x = [Math.floor(Math.random() * (x - 0))];
     return x;
-}
+};
 
     /* Resets the timer to the initial value if countingDown becomes false. */
 function countDown() {
@@ -73,10 +97,10 @@ function countDown() {
         timeRemaining--;
     } else {
         timeRemaining = timerInitial;
-    }
+    };
     $("#time-left").html(timeRemaining);
     outOfTime();
-}
+};
 
     /* Checks to see if the timer hits zero. If so, the clock stops and alerts the player they ran out of time.
     After clicking continue will call the getQuestion function to move on. */
@@ -86,8 +110,8 @@ function outOfTime() {
         clearInterval(countDown);
         $("#popup-card, #continue-button").fadeIn(400);
         $("#popup-text").html("Out of time! No points for this round. Press continue to move on.");
-    } 
-}
+    };
+};
 
     /* Selects the question using a random number, removes that question from the array, and adds the 
     question and its relevant answers to the html elements. */
@@ -98,39 +122,44 @@ function getQuestion() {
     $("#trivia-question").html(questionCurrent.question);
     for(i = 1; i <= 4; i++) {
         $("#answer" + i).html(questionCurrent.answers[i - 1]);
-      }  
-}
+      };
+};
 
 
     /* Creates the list items in the answer list with ids 1-4 */
 function getAnswers() {
     for(i = 1; i <= 4; i++) {
         $("#answer-list").append('<li id="answer'+ i +'" />');
-    }
-}
+    };
+};
 
 
-    /* Sets the win and lose conditions for the game. When the question array has run out, the game is over and the score is displayed. 
+    /* Sets the win and lose conditions for the game. When the question array has run out, 
+    the game is over and the score is displayed. 
     Otherwise, lets the player know if their answer was correct or not. */
 function winOrLose() {
     $("li").click(function() {
         var submittedAnswer = $(this).text();
         if (submittedAnswer == questionCurrent.correctAnswer) {
             countingDown = false;
-            $("#popup-card, #continue-button").fadeIn(400);
-            $("#popup-text").html("Your answer was correct!")
-
-            /* Reaction gifs!!! */
+            rightAnswerDisplay();
             playerWins ++;
         } else {
             countingDown = false;
-            $("#popup-card, #continue-button").fadeIn(400);
-            $("#popup-text").html("Bad luck! Your answer was super wrong.")
+            wrongAnswerDisplay();
+        };       
+    }); 
+};
 
-            /* Reaction gifs!!! */
-        }       
-        }); 
+    /* Displays random responses and gifs depending on whether the answer was right or wrong. */
+function rightAnswerDisplay() {
+    $("#popup-card, #continue-button").fadeIn(400);
+    $("#popup-text").html("Your answer was correct!");
 }
+function wrongAnswerDisplay() {
+    $("#popup-card, #continue-button").fadeIn(400);
+    $("#popup-text").html("Bad luck! Your answer was super wrong.");
+};
 
     /* Function that starts the game by calling relevant functions and beginning the countdown clock. */
 function gameElements() {
@@ -139,7 +168,7 @@ function gameElements() {
     getAnswers();
     outOfTime();
     winOrLose();
-} 
+};
 
     /* Sets the conditions for the game ending. Gives the user feedback on their score and 
     offers them the chance to play again. */
@@ -150,7 +179,7 @@ function gameOver() {
     $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ".");
     $("#popup-text").append("<br>");
     $("#popup-text").append("Press the Reset button to re-load the page and play again!");
-}
+};
 
     /* Sets up the functions of the buttons. */
 $("#confirm-button, #continue-button").click(function(){
@@ -163,12 +192,12 @@ $("#confirm-button, #continue-button").click(function(){
     countingDown = true;
     }
 });
+
 $("#reset-button").click(function(){
-    location.reload()
+    location.reload();
 });
 
     /* Begins the game. */
 gameElements();
 
-}
-
+};
