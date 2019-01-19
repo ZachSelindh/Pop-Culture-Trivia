@@ -34,7 +34,7 @@ var questionArray = [
     }, {
         question: "What was the name of the athletic adversarial alien race in 'Space Jam?",
         answers: [ "Martians", "Morlocks", "Nerdlucks", "Noidrots"],
-        correctAnswer: "Cypher"
+        correctAnswer: "Nerdlucks"
     }, {
         question: "What is the air-speed velocity of an unladen swallow?",
         answers: [ "11 m/s", "21.3 knots", "African or European?", "Windspeed + 10%"],
@@ -51,44 +51,82 @@ var questionArray = [
 
 ];
 
-var winReactionText = [
-    "Oh yeah! You nailed that one.",
-    "NICE! Correct answer!",
-    "Dude, great job! That was right!",
-    "Could you BE more correct? No.",
-    "Heck yeah. You're clearly a man/woman of culture.",
-
+var winReactions = [
+    {
+        text: "Nice job! Patrick Bateman approves.",
+        image: "assets/gifs/right/bale.gif"
+    } , {
+        text: "That answer was legen -wait for it!...",
+        image: "assets/gifs/right/barney.gif",
+    } , {
+        text: "Holy successful trivia answer, Batman!",
+        image: "assets/gifs/right/batman.gif",
+    } , {
+        text: "OMG girl that was totes the right answer! I'm literally dead.",
+        image: "assets/gifs/right/conrad.gif",
+    } ,{
+        text: "I'mma let you finish, but that answer... was right.",
+        image: "assets/gifs/right/kanye.gif",
+    } , {
+        text: "Well - done. The - Captain. Approves.",
+        image: "assets/gifs/right/kirk.gif",
+    } , {
+        text: "YOU DID IT! That was correct!",
+        image: "assets/gifs/right/office.gif",
+    } , {
+        text: "An explosive answer! GO GO!",
+        image: "assets/gifs/right/ranger.gif",
+    } , {
+        text: "Time to pour yourself some gin and juice. You did good.",
+        image: "assets/gifs/right/snoop.gif",
+    } , {
+        text: "That answer... was so hot right now.",
+        image: "assets/gifs/right/stefan.gif",
+    } 
 ];
 
-var loseReactionText = [
-
+var loseReactions = [
+    {
+        text: "Back in box. You were wrong.",
+        image: "assets/gifs/wrong/shame.gif"
+    } , {
+        text: "Nice answer, wasteoid. By which, I mean, WRONG.",
+        image: "assets/gifs/wrong/claire.gif",
+    } , {
+        text: "BLEUH! That answer was like my preferred lighting. Not very bright",
+        image: "assets/gifs/wrong/dracula.gif",
+    } , {
+        text: "I don't need my glasses to see how wrong you are.",
+        image: "assets/gifs/wrong/george.gif",
+    } ,{
+        text: "You mom goes to college. Maybe you should too.",
+        image: "assets/gifs/wrong/napoleon.gif",
+    } , {
+        text: "Your superpower must be getting questions wrong.",
+        image: "assets/gifs/wrong/samuel.gif",
+    } , {
+        text: "Looks like you missed your shot.",
+        image: "assets/gifs/wrong/shooter.gif",
+    } , {
+        text: "Did I do that? No, it was you. Being WRONG.",
+        image: "assets/gifs/wrong/urkel.gif",
+    } , {
+        text: "You could be the last person on earth and you'd still be wrong.",
+        image: "assets/gifs/wrong/will.gif",
+    } , {
+        text: "In the depths of space, I've never seen an answer more inane.",
+        image: "assets/gifs/wrong/zorg.gif"
+    } 
 ];
 
-var winReactionGIF = [
-    "assets/gifs/right/bale.gif",
-    "assets/gifs/right/barney.gif",
-    "assets/gifs/right/batman.gif",
-    "assets/gifs/right/kermit.gif",
-    "assets/gifs/right/kirk.gif",
-    "assets/gifs/right/levar.gif",
-    "assets/gifs/right/office.gif",
-    "assets/gifs/right/ranger.gif",
-    "assets/gifs/right/snoop.gif",
-    "assets/gifs/right/stefan.gif"
-];
-
-var loseReactionGIF = [
-    "assets/gifs/wrong/chris.gif",
-    "assets/gifs/wrong/claire.gif",
-    "assets/gifs/wrong/dracula.gif",
-    "assets/gifs/wrong/george.gif",
-    "assets/gifs/wrong/napoleon.gif",
-    "assets/gifs/wrong/samuel.gif",
-    "assets/gifs/wrong/shooter.gif",
-    "assets/gifs/wrong/sloth.gif",
-    "assets/gifs/wrong/urkel.gif",
-    "assets/gifs/wrong/will.gif"
-];
+var finishedReactions = {
+    win: "assets/gifs/win/high-five.gif",
+    good: "assets/gifs/win/zack.gif",
+    okay: "assets/gifs/win/amused.gif",
+    bad: "assets/gifs/win/krysten.gif",
+    bunk: "assets/gifs/win/shake.gif",
+    fail: "assets/gifs/win/tea.gif"
+}
 
 const timerInitial = 10;
 
@@ -131,8 +169,11 @@ function outOfTime() {
     if (timeRemaining === 0) {
         countingDown = false;
         clearInterval(countDown);
+        clearAnswers();
+        $("#reaction-img").attr("src", "");
         $("#popup-card, #continue-button").fadeIn(400);
-        $("#popup-text").html("Out of time! No points for this round. Press continue to move on.");
+        $("#popup-text").html("Out of time! No points for this round. <br>");
+        $("#popup-text").append("The correct answer was '" + questionCurrent.correctAnswer + "' <br>");
     };
 };
 
@@ -156,6 +197,12 @@ function getAnswers() {
     };
 };
 
+    /* Clears answers so they cannot be double-clicked. */
+function clearAnswers()  {
+    for(i = 1; i <= 4; i++) {
+        $("#answer" + i).empty();
+      };
+}
 
     /* Sets the win and lose conditions for the game. When the question array has run out, 
     the game is over and the score is displayed. 
@@ -163,6 +210,7 @@ function getAnswers() {
 function winOrLose() {
     $("li").click(function() {
         var submittedAnswer = $(this).text();
+        clearAnswers();
         if (submittedAnswer == questionCurrent.correctAnswer) {
             countingDown = false;
             rightAnswerDisplay();
@@ -177,11 +225,18 @@ function winOrLose() {
     /* Displays random responses and gifs depending on whether the answer was right or wrong. */
 function rightAnswerDisplay() {
     $("#popup-card, #continue-button").fadeIn(400);
-    $("#popup-text").html("Your answer was correct!");
+    indexOfReaction = randomNum(winReactions.length);
+    $("#popup-text").html(winReactions[indexOfReaction].text);
+    $("#reaction-img").attr("src", winReactions[indexOfReaction].image);
+    winReactions.splice(indexOfReaction, 1);
 }
 function wrongAnswerDisplay() {
     $("#popup-card, #continue-button").fadeIn(400);
-    $("#popup-text").html("Bad luck! Your answer was super wrong.");
+    indexOfReaction = randomNum(loseReactions.length);
+    $("#popup-text").html(loseReactions[indexOfReaction].text);
+    $("#reaction-img").attr("src", loseReactions[indexOfReaction].image);
+    $("#popup-text").append("<br> The correct answer was '" + questionCurrent.correctAnswer + "' <br>");
+    loseReactions.splice(indexOfReaction, 1);
 };
 
     /* Function that starts the game by calling relevant functions and beginning the countdown clock. */
@@ -197,13 +252,33 @@ function gameElements() {
     offers them the chance to play again. */
 function gameOver() {
     countingDown = false;
-    $("#continue-button").hide();
+    $("#continue-button, #answer-list").hide();
+    $("#reaction-img").attr("src", "");
     $("#popup-card, #reset-button").fadeIn(400);
 
     /* Make if statements that vary depending on the player's final score! */
 
-    $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ".");
-    $("#popup-text").append("<br>");
+    if (playerWins === 10) {
+        $("#popup-text").html("Congratulations! You got all 10 questions correct! <br>");
+        $("#reaction-img").attr("src", finishedReactions.win);
+    } else if (playerWins <= 8 && playerWins > 7) {
+        $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ". Not bad!<br>");
+        $("#reaction-img").attr("src", finishedReactions.good);
+    } else if (playerWins <= 6 && playerWins > 5) {
+        $("#popup-text").html("The game has concluded. Your score was " + playerWins + ". Not very good... <br>");
+        $("#reaction-img").attr("src", finishedReactions.okay);
+    } else if (playerWins <=4 && playerWins > 3) {
+        $("#reaction-img").attr("src", finishedReactions.bad);
+        $("#popup-text").html("Game Over! Your score was " + playerWins + ". You need to watch more TV and movies. <br>");
+    } else if (playerWins <=2 && playerWins > 1) {
+        $("#reaction-img").attr("src", finishedReactions.bunk);
+        $("#popup-text").html("Game Over! Your score was " + playerWins + ". Truly disappointing. <br>");
+    } else if (playerWins == 0) {
+        $("#reaction-img").attr("src", finishedReactions.fail);
+        $("#popup-text").html("Game Over! You didn't get a single question right. You need help. <br>");
+    }
+
+    
     $("#popup-text").append("Press the Reset button to re-load the page and play again!");
 };
 
