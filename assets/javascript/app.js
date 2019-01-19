@@ -262,13 +262,13 @@ function gameOver() {
     if (playerWins === 10) {
         $("#popup-text").html("Congratulations! You got all 10 questions correct! <br>");
         $("#reaction-img").attr("src", finishedReactions.win);
-    } else if (playerWins <= 9 && playerWins >= 7) {
+    } else if (playerWins >= 7) {
         $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ". Not bad!<br>");
         $("#reaction-img").attr("src", finishedReactions.good);
-    } else if (playerWins < 6 && playerWins >= 4) {
+    } else if (playerWins <= 6 && playerWins >= 5) {
         $("#popup-text").html("The game has concluded. Your score was " + playerWins + ". Not very good... <br>");
         $("#reaction-img").attr("src", finishedReactions.okay);
-    } else if (playerWins < 4 && playerWins >= 3) {
+    } else if (playerWins < 5 && playerWins >= 3) {
         $("#reaction-img").attr("src", finishedReactions.bad);
         $("#popup-text").html("Game Over! Your score was " + playerWins + ". You need to watch more TV and movies. <br>");
     } else if (playerWins < 3 && playerWins >= 1) {
