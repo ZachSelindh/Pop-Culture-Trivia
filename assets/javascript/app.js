@@ -148,8 +148,8 @@ $("#popup-card").fadeIn(500);
 
     /* Random number generator to pull a question randomly from the array. */
 function randomNum(x) {
-    x = [Math.floor(Math.random() * (x - 0))];
-    return x;
+    var y = [Math.floor(Math.random() * (x - 0))];
+    return y;
 };
 
     /* Resets the timer to the initial value if countingDown becomes false. */
@@ -253,6 +253,7 @@ function gameElements() {
 function gameOver() {
     countingDown = false;
     $("#continue-button, #answer-list").hide();
+    $("#popup-text").html("");
     $("#reaction-img").attr("src", "");
     $("#popup-card, #reset-button").fadeIn(400);
 
@@ -261,24 +262,22 @@ function gameOver() {
     if (playerWins === 10) {
         $("#popup-text").html("Congratulations! You got all 10 questions correct! <br>");
         $("#reaction-img").attr("src", finishedReactions.win);
-    } else if (playerWins <= 8 && playerWins > 7) {
+    } else if (playerWins <= 9 && playerWins >= 7) {
         $("#popup-text").html("Congratulations! The game has concluded. Your score was " + playerWins + ". Not bad!<br>");
         $("#reaction-img").attr("src", finishedReactions.good);
-    } else if (playerWins <= 6 && playerWins > 5) {
+    } else if (playerWins < 6 && playerWins >= 4) {
         $("#popup-text").html("The game has concluded. Your score was " + playerWins + ". Not very good... <br>");
         $("#reaction-img").attr("src", finishedReactions.okay);
-    } else if (playerWins <=4 && playerWins > 3) {
+    } else if (playerWins < 4 && playerWins >= 3) {
         $("#reaction-img").attr("src", finishedReactions.bad);
         $("#popup-text").html("Game Over! Your score was " + playerWins + ". You need to watch more TV and movies. <br>");
-    } else if (playerWins <=2 && playerWins > 1) {
+    } else if (playerWins < 3 && playerWins >= 1) {
         $("#reaction-img").attr("src", finishedReactions.bunk);
         $("#popup-text").html("Game Over! Your score was " + playerWins + ". Truly disappointing. <br>");
     } else if (playerWins == 0) {
         $("#reaction-img").attr("src", finishedReactions.fail);
         $("#popup-text").html("Game Over! You didn't get a single question right. You need help. <br>");
     }
-
-    
     $("#popup-text").append("Press the Reset button to re-load the page and play again!");
 };
 
@@ -289,11 +288,13 @@ $("#confirm-button, #continue-button").click(function(){
     } else {
     getQuestion();
     $("#popup-card").fadeOut(200);
+    $("#reaction-img").attr("src", "");
     $("#confirm-button, #continue-button").hide();
     countingDown = true;
     }
 });
 
+    /* Resets the page after the game is over. */
 $("#reset-button").click(function(){
     location.reload();
 });
